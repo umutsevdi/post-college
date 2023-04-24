@@ -10,9 +10,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.sevdi.postcollege.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+    FirebaseAuth auth;
 
     private ActivityMainBinding binding;
 
@@ -33,8 +36,15 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-        Intent intent = new Intent(this, AuthenticationActivity.class);
-        startActivity(intent);
+        auth = FirebaseAuth.getInstance();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = auth.getCurrentUser();
+        if (user == null) {
+            startActivity(new Intent(this, AuthenticationActivity.class));
+        }
+    }
 }

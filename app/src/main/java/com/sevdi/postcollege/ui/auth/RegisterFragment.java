@@ -4,14 +4,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.sevdi.postcollege.AuthenticationActivity;
+import com.sevdi.postcollege.R;
 import com.sevdi.postcollege.databinding.FragmentRegisterBinding;
 
+import java.util.regex.Pattern;
+
 public class RegisterFragment extends Fragment {
+
+    FirebaseAuth auth;
 
     /*    private LoginViewModel loginViewModel;*/
     private FragmentRegisterBinding binding;
@@ -23,117 +32,86 @@ public class RegisterFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
+        auth = FirebaseAuth.getInstance();
+        setFocusChangeListeners();
+        binding.register.setOnClickListener(i -> {
+            String email = binding.username.getText().toString();
+            String password = binding.password.getText().toString();
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
+                    task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "Registration complete", Toast.LENGTH_SHORT).show();
+                            ((AuthenticationActivity) requireActivity()).getNavView().setSelectedItemId(R.id.navigation_menu_login);
+                        } else {
+                            new AlertDialog.Builder(
+                                    requireContext())
+                                    .setTitle("Registration Failed")
+                                    .setMessage(task.getException().getMessage())
+                                    .setPositiveButton("OK", null)
+                                    .show();
+                        }
+                    }
+            );
+        });
+
         return binding.getRoot();
-
     }
-    /*
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
-        final ProgressBar loadingProgressBar = binding.loading;
+    void setFocusChangeListeners() {
+        binding.firstName.setOnFocusChangeListener(onFocusChangeListener());
+        binding.lastName.setOnFocusChangeListener(onFocusChangeListener());
+        binding.username.setOnFocusChangeListener(onFocusChangeListener());
+        binding.university.setOnFocusChangeListener(onFocusChangeListener());
+        binding.faculty.setOnFocusChangeListener(onFocusChangeListener());
+        binding.yearEnter.setOnFocusChangeListener(onFocusChangeListener());
+        binding.yearExit.setOnFocusChangeListener(onFocusChangeListener());
+        binding.password.setOnFocusChangeListener((view, isFocus) -> {
+            if (!isFocus) {
+                CharSequence p = null;
+                if (binding.password.getText().length() < 8) {
+                    p = "Passwords can not be less than 8 characters!";
+                } else if (!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", binding.password.getText())) {
+                    p = "Invalid password! Passwords should include at least a number an uppercase and lowercase letter";
+                }
+                if (p != null)
+                    new AlertDialog.Builder(
+                            view.getContext())
+                            .setTitle("Invalid password")
+                            .setMessage(p)
+                            .setPositiveButton("OK", null)
+                            .show();
 
-        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
             }
+            onFocusChangeListener();
         });
-
-        loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
+        binding.passwordAgain.setOnFocusChangeListener((view, isFocus) -> {
+            if (!isFocus && !binding.password.getText().toString().equals(binding.passwordAgain.getText().toString())) {
+                new AlertDialog.Builder(
+                        view.getContext())
+                        .setTitle("Invalid password")
+                        .setMessage("Passwords do not match!")
+                        .setPositiveButton("OK", null)
+                        .show();
             }
+            onFocusChangeListener();
         });
+    }
 
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
+    View.OnFocusChangeListener onFocusChangeListener() {
+        return (view, b) -> {
+            int number = 0;
+            if (binding.firstName.getText().length() > 0) number++;
+            if (binding.lastName.getText().length() > 0) number++;
+            if (binding.username.getText().length() > 0) number++;
+            if (binding.password.getText().length() > 0) number++;
+            if (binding.passwordAgain.getText().length() > 0) number++;
+            if (binding.university.getText().length() > 0) number++;
+            if (binding.faculty.getText().length() > 0) number++;
+            if (binding.yearEnter.getText().length() > 0) number++;
+            if (binding.yearExit.getText().length() > 0) number++;
+            binding.progressBar.setProgress(number * 9);
+            binding.register.setEnabled(number == 9);
         };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        });
     }
-
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void showLoginFailed(@StringRes Integer errorString) {
-        if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(
-                    getContext().getApplicationContext(),
-                    errorString,
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-     */
 }

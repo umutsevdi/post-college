@@ -32,6 +32,8 @@ public class AuthenticationActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navViewAuth, navController);
 
+        navView.setOnItemReselectedListener(i -> {
+        });
         navView.setOnItemSelectedListener(i -> {
             if (i.getItemId() == R.id.navigation_menu_register) {
                 navController.navigate(R.id.action_navigation_login_to_navigation_register);
@@ -42,5 +44,8 @@ public class AuthenticationActivity extends AppCompatActivity {
         });
     }
 
+    public BottomNavigationView getNavView() {
+        return binding.navViewAuth;
+    }
 
 }
