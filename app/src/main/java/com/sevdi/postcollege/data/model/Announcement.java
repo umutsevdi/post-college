@@ -1,10 +1,15 @@
 package com.sevdi.postcollege.data.model;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 
 public class Announcement extends Post {
     LocalDateTime startTime;
@@ -18,24 +23,52 @@ public class Announcement extends Post {
 
     public Map<String, Object> toMap() {
         Map<String, Object> m = super.toMap();
-        m.put("startTime", startTime);
-        m.put("deadline", deadline);
+        m.put("startTime", new Timestamp(Date.from(startTime.atZone(ZoneId.systemDefault()).toInstant())));
+        m.put("deadline", new Timestamp(Date.from(deadline.atZone(ZoneId.systemDefault()).toInstant())));
         return m;
     }
 
+    @SuppressWarnings("unchecked")
     public static Announcement from(Map<String, Object> m) {
         if (m == null) return null;
-        Announcement a = (Announcement) Post.from(m);
-        a.startTime = (LocalDateTime) m.get("startTime");
-        a.deadline = (LocalDateTime) m.get("deadline");
+        Announcement a = new Announcement(
+                (String) m.get("Document Id"),
+                (String) m.get("credentialsId"),
+                (String) m.get("message"),
+                (String) m.get("image"),
+                LocalDateTime.ofInstant(((Timestamp) Objects.requireNonNull(m.get("created"))).toDate().toInstant(), ZoneId.systemDefault()),
+                new HashSet<>((ArrayList<String>) Objects.requireNonNull(m.get("upIdList"))),
+                new HashSet<>((ArrayList<String>) Objects.requireNonNull(m.get("downIdList"))),
+                (String) m.get("postOwnerName"),
+                (String) m.get("profile"),
+                null,
+                null);
+        if (m.get("startTime") != null && m.get("deadline") != null) {
+            a.startTime = LocalDateTime.ofInstant(((Timestamp) Objects.requireNonNull(m.get("startTime"))).toDate().toInstant(), ZoneId.systemDefault());
+            a.deadline = LocalDateTime.ofInstant(((Timestamp) Objects.requireNonNull(m.get("deadline"))).toDate().toInstant(), ZoneId.systemDefault());
+        }
         return a;
     }
 
+    @SuppressWarnings("unchecked")
     public static Announcement from(DocumentSnapshot m) {
         if (m == null) return null;
-        Announcement a = (Announcement) Post.from(m);
-        a.startTime = (LocalDateTime) m.get("startTime");
-        a.deadline = (LocalDateTime) m.get("deadline");
+        Announcement a = new Announcement(
+                (String) m.get("Document Id"),
+                (String) m.get("credentialsId"),
+                (String) m.get("message"),
+                (String) m.get("image"),
+                LocalDateTime.ofInstant(((Timestamp) Objects.requireNonNull(m.get("created"))).toDate().toInstant(), ZoneId.systemDefault()),
+                new HashSet<>((ArrayList<String>) Objects.requireNonNull(m.get("upIdList"))),
+                new HashSet<>((ArrayList<String>) Objects.requireNonNull(m.get("downIdList"))),
+                (String) m.get("postOwnerName"),
+                (String) m.get("profile"),
+                null,
+                null);
+        if (m.get("startTime") != null && m.get("deadline") != null) {
+            a.startTime = LocalDateTime.ofInstant(((Timestamp) Objects.requireNonNull(m.get("startTime"))).toDate().toInstant(), ZoneId.systemDefault());
+            a.deadline = LocalDateTime.ofInstant(((Timestamp) Objects.requireNonNull(m.get("deadline"))).toDate().toInstant(), ZoneId.systemDefault());
+        }
         return a;
     }
 

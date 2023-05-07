@@ -75,7 +75,7 @@ public class PostListFragment<T extends Post> extends Fragment {
 
         binding.button.setOnClickListener(i -> {
             FragmentManager fm = requireActivity().getSupportFragmentManager();
-            PostDialogFragment postDialogFragment = new PostDialogFragment(false);
+            PostDialogFragment postDialogFragment = new PostDialogFragment(isAnnouncement);
             postDialogFragment.show(fm, "Share");
         });
 

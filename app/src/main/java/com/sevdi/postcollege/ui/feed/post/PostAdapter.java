@@ -26,7 +26,7 @@ import java.util.List;
 public class PostAdapter<T extends Post> extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     private final boolean isAnnouncement;
     private final Context context;
-    private List<T> posts = new ArrayList<>();
+    private final List<T> posts = new ArrayList<>();
 
     public PostAdapter(Context context, boolean isAnnouncement) {
         this.context = context;
@@ -65,8 +65,9 @@ public class PostAdapter<T extends Post> extends RecyclerView.Adapter<PostAdapte
             ImageStore.getInstance().getImage(context, post.getProfile(), holder.profileView::setImageBitmap);
         }
         if (isAnnouncement) {
-            holder.startDate.setText(((Announcement) post).getStartTime().format(DateTimeFormatter.ofPattern("hh:mma dd/MM/yyyy")));
-            holder.endDate.setText(((Announcement) post).getDeadline().format(DateTimeFormatter.ofPattern("hh:mma dd/MM/yyyy")));
+            Announcement a = Announcement.from(post.toMap());
+            holder.startDate.setText(a.getStartTime().format(DateTimeFormatter.ofPattern("hh:mma dd/MM/yyyy")));
+            holder.endDate.setText(a.getDeadline().format(DateTimeFormatter.ofPattern("hh:mma dd/MM/yyyy")));
         }
 
     }
@@ -102,6 +103,7 @@ public class PostAdapter<T extends Post> extends RecyclerView.Adapter<PostAdapte
             startDate = view.findViewById(R.id.startText);
             endDate = view.findViewById(R.id.endText);
             if (!isAnnouncement) {
+                view.findViewById(R.id.textView2).setVisibility(View.GONE);
                 startDate.setVisibility(View.GONE);
                 endDate.setVisibility(View.GONE);
             }

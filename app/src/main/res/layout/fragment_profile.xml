@@ -34,6 +34,18 @@
                 app:icon="@drawable/baseline_edit_24"
                 app:iconTint="@color/black" />
 
+            <Button
+                android:id="@+id/log_out"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/white"
+                android:elevation="8dp"
+                android:text="Log Out"
+                android:textColor="@color/black"
+                android:translationZ="8dp"
+                app:icon="@drawable/baseline_exit_to_app_24"
+                app:iconTint="@color/black" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

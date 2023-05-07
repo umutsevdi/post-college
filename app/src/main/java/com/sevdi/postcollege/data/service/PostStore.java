@@ -7,6 +7,7 @@ import com.google.firebase.firestore.Query;
 import com.sevdi.postcollege.data.model.Announcement;
 import com.sevdi.postcollege.data.model.Post;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -35,17 +36,20 @@ public class PostStore<T extends Post> {
         return postStore;
     }
 
-    public List<Post> getPage(int page) throws ExecutionException, InterruptedException {
+    public List<T> getPage(int page) throws ExecutionException, InterruptedException {
         System.out.println("GET_PAGE#" + page);
         AtomicInteger before = new AtomicInteger();
         CollectionReference collectionReference = db.collection(path);
-        List<Post> p = Tasks.
+        List<Announcement> p = Tasks.
                 await(collectionReference.orderBy("created", Query.Direction.DESCENDING).get())
                 .getDocuments().stream()
                 .filter(j -> before.getAndIncrement() >= (page * PAGE_SIZE))
-                .limit(PAGE_SIZE).map(T::from).collect(Collectors.toList());
+                .limit(PAGE_SIZE).map(Announcement::from)
+                .filter(j -> !path.equals("announcement") || j.getDeadline().isAfter(LocalDateTime.now()))
+                .collect(Collectors.toList());
         System.out.println("GET_PAGE#DONE:" + p);
-        return p;
+
+        return (List<T>) p;
     }
 
     public void getPageCount(Consumer<Integer> onCount) {

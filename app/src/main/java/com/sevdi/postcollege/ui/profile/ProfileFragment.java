@@ -2,6 +2,7 @@ package com.sevdi.postcollege.ui.profile;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,13 @@ public class ProfileFragment extends Fragment {
         binding.toggleEducation.setOnCheckedChangeListener((i, isChecked) -> binding.educationTable.setVisibility(isChecked ? View.VISIBLE : View.GONE));
         binding.toggleWork.setOnCheckedChangeListener((i, isChecked) -> binding.workTable.setVisibility(isChecked ? View.VISIBLE : View.GONE));
         binding.toggleSocial.setOnCheckedChangeListener((i, isChecked) -> binding.socialTable.setVisibility(isChecked ? View.VISIBLE : View.GONE));
+        binding.logOut.setOnClickListener(
+                i -> {
+                    requireActivity().getSharedPreferences("PostCollege", Context.MODE_PRIVATE).edit().clear().apply();
+                    AccountStore.getInstance().setAccount(null);
+                    requireActivity().finish();
+                }
+        );
 
         return root;
     }
@@ -56,6 +64,7 @@ public class ProfileFragment extends Fragment {
         if (credentialId.equals(AccountStore.getInstance().getAccount().getCredentialsId())) {
             System.out.println("PROFILE::SELF");
             binding.editProfile.setVisibility(View.VISIBLE);
+            binding.logOut.setVisibility(View.VISIBLE);
         }
         account = fetchAccount(credentialId);
         if (account == null) {
