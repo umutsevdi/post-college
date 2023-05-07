@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:layout_weight="1"
+    android:background="#FFFFFF"
+    android:baselineAligned="false"
+    android:elevation="4dp"
+    android:orientation="vertical"
+    android:translationZ="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginTop="8dp"
+        android:baselineAligned="false"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:translationZ="8dp">
+
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="0"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <Button
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="#00FFFFFF"
+            android:text="@string/first_name"
+            android:textAlignment="textStart"
+            android:textColor="@color/purple_700"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            android:text="20/12/2023"
+            android:textAlignment="center"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="6dp"
+        android:text="Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. "
+        android:textAlignment="textStart" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Event Period" />
+
+        <TextView
+            android:id="@+id/startText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/nan"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/endText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/nan"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textAlignment="center">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/upvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="12dp"
+            android:translationZ="12dp"
+            app:chipBackgroundColor="@color/white"
+            app:chipEndPadding="10pt"
+            app:chipIcon="@drawable/baseline_keyboard_arrow_up_24"
+            app:chipStartPadding="10pt"
+            app:closeIconEndPadding="0dp"
+            app:closeIconStartPadding="0dp"
+            app:textEndPadding="0dp"
+            app:textStartPadding="0dp" />
+
+        <TextView
+            android:id="@+id/counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15pt"
+            android:text="@string/nan"
+            android:textAlignment="center" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/downvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="12dp"
+            android:translationZ="12dp"
+            app:chipBackgroundColor="@color/white"
+            app:chipEndPadding="10pt"
+            app:chipIcon="@drawable/baseline_keyboard_arrow_down_24"
+            app:chipStartPadding="10pt"
+            app:closeIconEndPadding="0dp"
+            app:closeIconStartPadding="0dp"
+            app:textEndPadding="0dp"
+            app:textStartPadding="0pt" />
+
+    </LinearLayout>
+
+</LinearLayout>

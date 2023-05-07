@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.feed.post.PostFeedFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/white"
+            android:elevation="2dp"
+            android:text="@string/new_post"
+            android:textColor="@color/black"
+            android:translationZ="2dp"
+            app:icon="@drawable/baseline_add_24"
+            app:iconTint="#000000" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:name="com.sevdi.postcollege.ui.feed.post.PostListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/fragment_post_feed" />
+        </ScrollView>
+
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

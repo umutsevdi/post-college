@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/upload_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/fragment_horizontal_margin"
+    android:paddingTop="@dimen/fragment_vertical_margin"
+    android:paddingRight="@dimen/fragment_horizontal_margin"
+    android:paddingBottom="@dimen/fragment_vertical_margin"
+    tools:context=".ui.auth.RegisterFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/edit_profile"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/white"
+                android:elevation="8dp"
+                android:text="@string/edit_profile"
+                android:textColor="@color/black"
+                android:translationZ="8dp"
+                app:icon="@drawable/baseline_edit_24"
+                app:iconTint="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                android:translationZ="4dp">
+
+                <TextView
+                    android:id="@+id/first_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/first_name" />
+
+                <TextView
+                    android:id="@+id/last_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/last_name" />
+
+            </LinearLayout>
+
+            <!-- Contact Information -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:checked="true"
+                android:fallbackLineSpacing="false"
+                android:text="Contact Information" />
+
+            <TableLayout
+                android:id="@+id/contact_table"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:elevation="8dp"
+                android:translationZ="8dp"
+                android:visibility="visible">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/prompt_email" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Phone Number" />
+
+                </TableRow>
+            </TableLayout>
+
+            <!-- Education Information -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:checked="true"
+                android:fallbackLineSpacing="false"
+                android:text="Education" />
+
+            <TableLayout
+                android:id="@+id/education_table"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:elevation="8dp"
+                android:translationZ="8dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/university"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/university" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/degree"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/degree" />
+
+                    <TextView
+                        android:id="@+id/faculty"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/faculty" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/start_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/entry_year" />
+
+                    <TextView
+                        android:id="@+id/end_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/graduation_year" />
+                </TableRow>
+
+            </TableLayout>
+
+            <!-- Work Information -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_work"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:checked="false"
+                android:fallbackLineSpacing="false"
+                android:text="Work Information" />
+
+            <TableLayout
+                android:id="@+id/work_table"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:elevation="8dp"
+                android:translationZ="8dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/company"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/company" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/city"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/city" />
+
+                    <TextView
+                        android:id="@+id/country"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/country" />
+
+                </TableRow>
+            </TableLayout>
+
+            <!-- Social Information -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_social"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:checked="false"
+                android:fallbackLineSpacing="false"
+                android:text="Social Media" />
+
+            <TableLayout
+                android:id="@+id/social_table"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:elevation="8dp"
+                android:translationZ="8dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/facebook"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/facebook" />
+
+                    <TextView
+                        android:id="@+id/instagram"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/instagram" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/twitter"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/twitter" />
+
+                    <TextView
+                        android:id="@+id/github"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/github" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/website"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/website" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
